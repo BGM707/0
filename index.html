@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -7,19 +6,21 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
 	<link rel="stylesheet" href="assets/css/main.css" />
 	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	<link rel="stylesheet" href="assets/css/main.css" />
 
 	<style>
-		/* Reutiliza estilos base y asegura scroll */
 		body {
 			margin: 0;
 			font-family: sans-serif;
-			background-color: #121212;
 			color: #fff;
 			overflow-y: auto;
+			transition: background-color 0.5s ease;
 		}
 
-		
+		#wrapper {
+			background-color: #121212; /* fondo inicial */
+			transition: background-color 0.5s ease;
+		}
+
 		button {
 			margin-top: 1em;
 			padding: 0.5em 1em;
@@ -28,15 +29,7 @@
 			color: white;
 			cursor: pointer;
 			border-radius: 5px;
-		}
-
-		#misWebsContainer {
-			display: none;
-			margin-top: 2em;
-			background-color: rgba(255, 255, 255, 0.05);
-			padding: 1em;
-			border-radius: 10px;
-			border: 1px solid rgba(255,255,255,0.2);
+			margin-right: 0.5em;
 		}
 
 		.grid {
@@ -75,6 +68,36 @@
 			margin-top: 3em;
 			font-size: 0.8em;
 		}
+
+		/* Panel lateral */
+		#panelWebs {
+			position: fixed;
+			top: 0;
+			right: -100%;
+			width: 100%;
+			max-width: 800px;
+			height: 100%;
+			background-color: #1e1e1e;
+			color: white;
+			box-shadow: -2px 0 10px rgba(0, 0, 0, 0.5);
+			padding: 2em;
+			overflow-y: auto;
+			transition: right 0.4s ease;
+			z-index: 9999;
+		}
+
+		#panelWebs.abierto {
+			right: 0;
+		}
+
+		#cerrarPanel {
+			position: absolute;
+			top: 10px;
+			right: 20px;
+			font-size: 2em;
+			cursor: pointer;
+			color: white;
+		}
 	</style>
 </head>
 <body class="is-preload">
@@ -99,67 +122,8 @@
 						<p>Conoce mis proyectos en <a href="https://github.com/bgm707">GitHub</a>.</p>
 						<p>Mira cómo creamos soluciones informáticas en <a href="https://www.youtube.com/@BGM.developer">YouTube</a>.</p>
 
-						<!-- Botón para mostrar las webs -->
-						<button onclick="mostrarWebs()">Ver mis Creaciones</button>
-
-						<!-- Contenedor visual de las webs -->
-						<div id="misWebsContainer">
-							<div class="grid">
-								<!-- Card 1 -->
-								<div class="web-card">
-									<div class="card-header">
-										<h3>Construcción y Arquitectura</h3>
-										<a href="https://iprovm.com" target="_blank">Ir a la web</a>
-									</div>
-									<iframe src="https://iprovm.com"></iframe>
-								</div>
-
-								<!-- Card 2 -->
-								<div class="web-card">
-									<div class="card-header">
-										<h3>Web Musical</h3>
-										<a href="https://crisoull.com" target="_blank">Ir a la web</a>
-									</div>
-									<iframe src="https://crisoull.com"></iframe>
-								</div>
-								<!-- Card 3 -->
-								<div class="web-card">
-									<div class="card-header">
-										<h3>Optica web </h3>
-										<a href="https://bgm707.github.io/Optica/" target="_blank">Ir a la web</a>
-									</div>
-									<iframe src="https://bgm707.github.io/Optica/"></iframe>
-								</div>
-								<!-- Card 4 -->
-								<div class="web-card">
-									<div class="card-header">
-										<h3>Centro Medico Los Angeles</h3>
-										<a href="https://bgm707.github.io/centromedico/" target="_blank">Ir a la web</a>
-									</div>
-									<iframe src="https://bgm707.github.io/centromedico/"></iframe>
-								</div>
-								<!-- Card 5 -->
-								
-								<!-- Card 6 -->
-								<div class="web-card">
-									<div class="card-header">
-										<h3>Casino Online</h3>
-										<a href="https://bgm707.github.io/JA-VO_casino/" target="_blank">Ir a la web</a>
-									</div>
-									<iframe src="https://bgm707.github.io/JA-VO_casino/"></iframe>
-								</div>
-								<!-- <div class="web-card">
-									<div class="card-header">
-										<h3>Plantilla de Prueba</h3>
-										<a href="https://bgm707.github.io/blogcrisoull/#" target="_blank">Ir a la web</a>
-									</div>
-									<iframe src="https://bgm707.github.io/blogcrisoull/#"></iframe>
-								</div> -->
-								
-								<!-- Agrega más tarjetas aquí -->
-
-							</div>
-						</div>
+						<!-- Botón -->
+						<button onclick="abrirPanel()">Ver mis Creaciones</button>
 					</section>
 				</nav>
 			</header>
@@ -172,21 +136,72 @@
 			</footer>
 		</div>
 	</div>
+
+	<!-- Panel lateral de mis webs -->
+	<div id="panelWebs">
+		<span id="cerrarPanel" onclick="cerrarPanel()">×</span>
+		<h2 style="text-align: center;">Mis Creaciones</h2>
+		<div class="grid">
+			<div class="web-card">
+				<div class="card-header">
+					<h3>Construcción y Arquitectura</h3>
+					<a href="https://iprovm.com" target="_blank">Ir a la web</a>
+				</div>
+				<iframe src="https://iprovm.com"></iframe>
+			</div>
+
+			<div class="web-card">
+				<div class="card-header">
+					<h3>Web Musical</h3>
+					<a href="https://crisoull.com" target="_blank">Ir a la web</a>
+				</div>
+				<iframe src="https://crisoull.com"></iframe>
+			</div>
+
+			<div class="web-card">
+				<div class="card-header">
+					<h3>Optica web</h3>
+					<a href="https://bgm707.github.io/Optica/" target="_blank">Ir a la web</a>
+				</div>
+				<iframe src="https://bgm707.github.io/Optica/"></iframe>
+			</div>
+
+			<div class="web-card">
+				<div class="card-header">
+					<h3>Centro Medico Los Angeles</h3>
+					<a href="https://bgm707.github.io/centromedico/" target="_blank">Ir a la web</a>
+				</div>
+				<iframe src="https://bgm707.github.io/centromedico/"></iframe>
+			</div>
+
+			<div class="web-card">
+				<div class="card-header">
+					<h3>Casino Online</h3>
+					<a href="https://bgm707.github.io/JA-VO_casino/" target="_blank">Ir a la web</a>
+				</div>
+				<iframe src="https://bgm707.github.io/JA-VO_casino/"></iframe>
+			</div>
+		</div>
+	</div>
+
 	<!-- Scripts -->
 	<script>
-		window.onload = function() {
+		window.onload = function () {
 			document.body.classList.remove('is-preload');
 		}
-		window.ontouchmove = function() {
+		window.ontouchmove = function () {
 			return false;
 		}
-		window.onorientationchange = function() {
+		window.onorientationchange = function () {
 			document.body.scrollTop = 0;
 		}
 
-		function mostrarWebs() {
-			const container = document.getElementById("misWebsContainer");
-			container.style.display = container.style.display === "none" ? "block" : "none";
+		function abrirPanel() {
+			document.getElementById("panelWebs").classList.add("abierto");
+		}
+
+		function cerrarPanel() {
+			document.getElementById("panelWebs").classList.remove("abierto");
 		}
 	</script>
 </body>
